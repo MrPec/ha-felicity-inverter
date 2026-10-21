@@ -27,7 +27,15 @@ Give the stick a fixed DHCP lease.
 | Load | `lPerc` | % of rating |
 | Inverter temperature, Temperature 2 | `Temp[0][0]`/10, `Temp[0][3]`/10 | |
 | Work mode / warning / fault code | `workM`, `warn`, `fault` | diagnostic, raw codes |
-| Fault | `fault != 0` | binary, problem |
+| Active warnings | `warn` bits | text, e.g. `Phase sequence error` |
+| Fault / Warning | `fault != 0` / any `warn` bit | binary, problem; attributes list the bits |
+| Phase sequence error | `warn` bit 25 | binary, problem |
+
+### Warning bits
+
+Bit *n* of `warn` matches warning code *n* on the inverter display. This is verified for bit 25: a T-REX-10KHP3G01 with two swapped grid phases showed a flashing `25` on the LCD and had bit 25 set; after swapping L2/L3 the bit cleared, `workM` went from 3 to 5 and the inverter synchronised to the grid. While bit 25 is set the inverter does not feed the grid and throttles PV to its own consumption.
+
+Names for 7 (low battery) and 9 (overload) come from the warning table of the manual. Other bits are shown as `Warning bit <n>`; on the test unit bits 4 and 6 were set while the app showed *CommOffline* (no smart meter) and *Derating by voltage*.
 | WiFi signal | stick `rssi` | disabled by default |
 
 There are no energy counters in the realtime answer. For the Energy dashboard create an **Integral** helper (Riemann sum, left method, kWh) on *PV power*.

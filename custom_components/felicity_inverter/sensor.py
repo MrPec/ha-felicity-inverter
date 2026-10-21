@@ -37,6 +37,7 @@ from homeassistant.const import (
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
+from .const import warning_names
 from .coordinator import FelicityConfigEntry, FelicityCoordinator
 from .entity import FelicityEntity, path
 
@@ -207,6 +208,10 @@ SENSORS: tuple[FelicitySensorDescription, ...] = (
     FelicitySensorDescription(
         key="fault_code", name="Fault code", entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda d: d.get("fault"),
+    ),
+    FelicitySensorDescription(
+        key="active_warnings", name="Active warnings",
+        value_fn=lambda d: (", ".join(warning_names(d.get("warn"))) or "none")[:255],
     ),
     FelicitySensorDescription(
         key="wifi_rssi", name="WiFi signal", device_class=SensorDeviceClass.SIGNAL_STRENGTH,
