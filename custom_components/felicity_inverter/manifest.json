@@ -1,0 +1,13 @@
+{
+  "domain": "felicity_inverter",
+  "name": "Felicity Inverter (local)",
+  "codeowners": ["@MrPec"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/MrPec/ha-felicity-inverter",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/MrPec/ha-felicity-inverter/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}
